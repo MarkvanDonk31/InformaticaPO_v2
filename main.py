@@ -10,6 +10,7 @@ player_name = input("What is your name, sir?")
 
 player = Player(player_name)
 print("Good luck! ", player_name)
+print("Tof maat")
 
 input("Press enter to play!")
 
