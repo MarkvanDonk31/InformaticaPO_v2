@@ -55,10 +55,10 @@ class Battle:
       loot_type = random.choice(loot_list)
 
       if loot_type == "Weapon":
-        item = Weapon(random.randint(self.player.level, self.player.level + 1))
+        item = Weapon(random.randint(self.player.level, self.player.level + 1), "")
         print("Yay! The monsters dropped a new weapon piece!")
       elif loot_type == "Armor":
-        item = Armor(random.randint(self.player.level, self.player.level + 1))
+        item = Armor(random.randint(self.player.level, self.player.level + 1), "")
         print("Yay! The monsters dropped a new armor piece!")
 
       item.print_stats()

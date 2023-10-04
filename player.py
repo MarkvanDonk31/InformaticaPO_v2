@@ -1,6 +1,7 @@
 import random
-from item import Item, Weapon, Armor
-import main
+
+from item import Armor, Weapon
+
 
 class Player:
   level = 1
@@ -14,8 +15,8 @@ class Player:
   def __init__(self, name):
     self.name = name
 
-    self.weapon = Weapon(1)
-    self.armor = Armor(1)
+    self.weapon = Weapon(1, "")
+    self.armor = Armor(1, "")
 
   def attack(self):
     damage = self.level + random.randint(self.weapon.min_damage,
@@ -71,9 +72,7 @@ class Player:
       self.weapon = item
     elif item.item_type == "armor":
       self.armor = item
-
-      player.print_Stats()
-
+    
   def print_Stats(self):
     print()
     print("##########################")

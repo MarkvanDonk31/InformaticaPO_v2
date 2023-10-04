@@ -21,16 +21,6 @@ class Weapon(Item):
 
     self.item_type = "weapon"
     weapon_list = ["Sword", "Axe"]
-    enchantment_list = [
-    "Fire I",
-    "Fire II",
-    "Ice I",
-    "Ice II",
-    "Dark Mater I",
-    "Dark Mater II",
-    "Blood I",
-    "Blood II"
-    ]
     self.weapon_type = random.choice(weapon_list)
     
 

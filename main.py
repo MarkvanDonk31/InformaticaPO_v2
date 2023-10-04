@@ -1,10 +1,9 @@
 import random
-from player import Player
-from monster import Monster, Skeleton, Troll
-from item import Item, Weapon, Armor
+
 from battle import Battle
-
-
+from item import Armor, Item, Weapon
+from monster import Monster, Skeleton, Troll
+from player import Player
 
 player_name = input("What is your name, sir?")
 
