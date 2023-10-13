@@ -10,6 +10,7 @@ class Player:
   hp = 50
   max_hp = 50
   name = ""
+  inventory = []
  
 
   def __init__(self, name):
