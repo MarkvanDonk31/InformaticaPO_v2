@@ -5,12 +5,16 @@ from battle import Battle
 from item import Armor, Item, Weapon
 from monster import Monster, Skeleton, Troll
 from player import Player
+from visual import Visual
+from movement import Movement
 
 ############################################################################
 
 fenrir_Defeat = False
 balam_Defeat = False
 game_Status = "running"
+battle_count = 0
+
 
 #############################################################################
 
@@ -18,46 +22,9 @@ clear = lambda: os.system('clear')
 
 #############################################################################
 
-print(''''
+Visual.openingScreen()
 
-################################################
-#                  Welcome to!                 #
-#                GALANDERS QUEST               #
-################################################
-
-               [][][] /""\ [][][]
-                |::| /____\ |::|
-                |[]|_|::::|_|[]|
-                |::::::__::::::|
-                |:::::/||\:::::|
-                |:#:::||||::#::|
-               #%*###&*##&*&#*&##
-              ##%%*####*%%%###*%*#
-
-################################################
-#            Made by Mark en Thijmen           # 
-#            Press ENTER to Continue!          #
-################################################
-''')
-input()
-clear()
-#############################################################################
-
-print("")
-print('################################################')
-print("#                 Welcome Sir!                 #")
-print('################################################')
-print("#You are a knight from the kingdom of Galender!#")
-print("#It is your task to slay the legendary monsters#")
-print("# called Fenrir and Balam! These beasts form a #")
-print("# threat to the kingdom! On your path you can  #")
-print("# find chest, keys, weapons, armor pieces and  #")
-print("#  enchantments. Combine the keys and chests   #")
-print("# collect the loot! Good luck on your mission! #")
-print("#      What is your name, noble knight?        #")
-print('################################################')
-print()
-
+Visual.loreScreen()
 player_name = input("Your name: ")
 player = Player(player_name)
 
@@ -65,23 +32,44 @@ print("Good luck " + player_name + "! Your journey will be legendary!")
 print()
 print("Press ENTER to Start your journey!")
 input()
+clear()
 
 #############################################################################
 
 
-battle_count = 0
-while player.hp > 0:
-  print()
-  print("----")
-  print()
-  battle_count += 1
-  print("Battle", battle_count)
+## While the game_Status == running the game is during.
+while game_Status == "running":
+  # print("----")
+  # print()
 
-  battle = Battle(player)
-  battle.fight_battle()
+  
+  # battle = Battle(player)
+  # battle.fight_battle()
 
-print()
-print("You have fought", battle_count, "battles")
-player.print_Stats()
-print()
-print("Thanks for playing!")
+  Movement.showLocation()
+  playeraction = input("  > ")
+  playeraction = playeraction.lower().split(" ", 1)
+
+  if playeraction[0] == "walk":
+    Movement.walk(playeraction[1])
+
+
+#############################################################################
+  
+## Check if the plater is alive, if HP < 0 than the game stops.
+  if player.hp < 0:
+    game_Status = "player_death"
+
+  # Check if the player won the game by killing Balam and Fenrir.
+  elif fenrir_Defeat == True and balam_Defeat == True:
+    game_Status = "player_win"
+
+## Show visual  of deathScreen
+if game_Status == "player_death":
+      Visual.defeatScreen()
+
+## Show visual of winScreen
+if game_Status == "player_win":
+      Visual.winScreen()
+  
+#############################################################################

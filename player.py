@@ -7,7 +7,7 @@ class Player:
   level = 1
   xp = 0
   next_level_xp = 500
-  hp = 50
+  hp = 1
   max_hp = 50
   name = ""
   inventory = []
