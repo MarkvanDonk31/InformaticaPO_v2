@@ -1,4 +1,6 @@
 import random
+
+
 class Monster():
   hp = 1
   max_hp = 1
@@ -6,6 +8,7 @@ class Monster():
   max_damage = 1
 
   monster_type = None
+  monster_phrase = "."
 
   xp_value = 1
 
@@ -34,14 +37,22 @@ class Monster():
       print("*Dead*")
 
 
+
+  def monstertalk(monster_type):
+    print(monster_type.monster_phrase)
+
+
+
 class Skeleton(Monster):
 
   def __init__(self, level):
     Monster.__init__(self, level)
 
     self.monster_type = "Skeleton"
+    self.monster_phrase = " *RATLLE* I'm dead but my bones are still remaining!"
 
-    self.hp = self.max_hp = self.level * 15
+    self.hp = 10
+    self.max_hp = 10
     self.min_damage = self.level + 1
     self.max_damage = self.level * 3
 
@@ -54,10 +65,12 @@ class Troll(Monster):
     Monster.__init__(self, level)
 
     self.monster_type = "Troll"
+    self.monster_phrase = " *OEHAA* uhh.. Troll am I uuh.."
 
-    self.hp = self.max_hp = self.level * 20
-    self.min_damage = self.level + 1
-    self.max_damage = self.level * 4
+    self.hp = 20
+    self.max_hp = 20
+    self.min_damage = 5
+    self.max_damage = 10
 
     self.xp_value = 100 + self.level * 20
 
@@ -72,3 +85,67 @@ class Troll(Monster):
 
     print(self.monster_type, "attacks for", damage, "damage")
     return damage
+
+
+
+class Sorcerer(Monster):
+  def __init__(self, level):
+    Monster.__init__(self, level)
+
+    self.monster_type = "Sorcerer"
+    self.monster_phrase = " *PFEWWH* Fire... is POWER!"
+
+    self.hp = 20
+    self.max_hp = 20
+    
+
+
+class Ghost(Monster):
+  def __init__(self, level):
+    Monster.__init__(self, level)
+
+    self.monster_type = "Ghost"
+    self.monster_phrase = " *BOO!* Death doesn't stop me!"
+
+    self.hp = 20
+    self.max_hp = 20
+
+
+
+class Goblin(Monster):
+  def __init__(self, level):
+    Monster.__init__(self, level)
+
+    self.monster_type = "Goblin"
+    self.monster_phrase = " *GRRRRR* Give me your gold!"
+
+    self.hp = 20
+    self.max_hp = 20
+
+
+
+class Fenrir(Monster):
+  def __init__(self, level):
+    Monster.__init__(self, level)
+
+    self.monster_type = "Fenrir"
+    self.monster_phrase = "  *AWOEHH* I.. want.. your.. BLOOD!"
+
+    self.hp = 20
+    self.max_hp = 20
+
+
+
+class Balam(Monster):
+  def __init__(self, level):
+    Monster.__init__(self, level)
+
+    self.monster_type = "Balam"
+    self.monster_phrase = " *HMMM* Even death fears me..."
+
+    self.hp = 20
+    self.max_hp = 20
+
+
+
+

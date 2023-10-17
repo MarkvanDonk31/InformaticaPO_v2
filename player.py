@@ -4,14 +4,13 @@ from item import Armor, Weapon
 
 
 class Player:
-  level = 1
+  level = 10
   xp = 0
   next_level_xp = 500
   hp = 1
   max_hp = 50
   name = ""
   inventory = []
- 
 
   def __init__(self, name):
     self.name = name
@@ -73,7 +72,7 @@ class Player:
       self.weapon = item
     elif item.item_type == "armor":
       self.armor = item
-    
+
   def print_Stats(self):
     print()
     print("##########################")

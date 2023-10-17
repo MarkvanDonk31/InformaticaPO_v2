@@ -15,7 +15,6 @@ balam_Defeat = False
 game_Status = "running"
 battle_count = 0
 
-
 #############################################################################
 
 clear = lambda: os.system('clear')
@@ -36,13 +35,11 @@ clear()
 
 #############################################################################
 
-
 ## While the game_Status == running the game is during.
 while game_Status == "running":
   # print("----")
   # print()
 
-  
   # battle = Battle(player)
   # battle.fight_battle()
 
@@ -53,9 +50,14 @@ while game_Status == "running":
   if playeraction[0] == "walk":
     Movement.walk(playeraction[1])
 
+  if playeraction[0] == "attack":
+    pass
+  if playeraction[0] == "use":
+    pass
+
 
 #############################################################################
-  
+
 ## Check if the plater is alive, if HP < 0 than the game stops.
   if player.hp < 0:
     game_Status = "player_death"
@@ -66,10 +68,10 @@ while game_Status == "running":
 
 ## Show visual  of deathScreen
 if game_Status == "player_death":
-      Visual.defeatScreen()
+  Visual.defeatScreen()
 
 ## Show visual of winScreen
 if game_Status == "player_win":
-      Visual.winScreen()
-  
+  Visual.winScreen()
+
 #############################################################################
