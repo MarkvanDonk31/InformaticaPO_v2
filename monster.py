@@ -1,6 +1,5 @@
 import random
 
-
 class Monster():
   hp = 1
   max_hp = 1
@@ -8,7 +7,8 @@ class Monster():
   max_damage = 1
 
   monster_type = None
-  monster_phrase = "."
+  monster_phrase = " "
+  monster_loot = []
 
   xp_value = 1
 
@@ -20,7 +20,7 @@ class Monster():
     print(self.monster_type, "attacks for", damage, "damage")
     return damage
 
-  def take_hit(self, damage):
+  def take_hit(self, damage, target):
     self.hp -= damage
 
     if self.hp > 0:
@@ -28,7 +28,7 @@ class Monster():
 
     else:
       print(self.monster_type, "was slain.")
-
+  
   def print_stats(self):
     print(self.monster_type, "- level", self.level)
     if self.hp > 0:
@@ -53,10 +53,12 @@ class Skeleton(Monster):
 
     self.hp = 10
     self.max_hp = 10
+    
     self.min_damage = self.level + 1
     self.max_damage = self.level * 3
 
     self.xp_value = 100 + self.level * 20
+    self.monster_loot = []
 
 
 class Troll(Monster):
@@ -69,10 +71,13 @@ class Troll(Monster):
 
     self.hp = 20
     self.max_hp = 20
+    
     self.min_damage = 5
     self.max_damage = 10
 
     self.xp_value = 100 + self.level * 20
+    self.monster_loot = []
+
 
     self.crit_chance = max(30, level * 10)
 
@@ -97,7 +102,13 @@ class Sorcerer(Monster):
 
     self.hp = 20
     self.max_hp = 20
-    
+
+    self.min_damage = 5
+    self.max_damage = 10
+
+    self.xp_value = 10
+    self.monster_loot = []
+
 
 
 class Ghost(Monster):
@@ -109,6 +120,14 @@ class Ghost(Monster):
 
     self.hp = 20
     self.max_hp = 20
+    
+    self.min_damage = 5
+    self.max_damage = 10
+
+    self.xp_value = 10
+    self.monster_loot = []
+
+
 
 
 
@@ -121,6 +140,14 @@ class Goblin(Monster):
 
     self.hp = 20
     self.max_hp = 20
+    
+    self.min_damage = 5
+    self.max_damage = 10
+    
+    self.xp_value = 10
+    self.monster_loot = []
+
+
 
 
 
@@ -134,6 +161,12 @@ class Fenrir(Monster):
     self.hp = 20
     self.max_hp = 20
 
+    self.min_damage = 5
+    self.max_damage = 10
+  
+    self.xp_value = 10
+    self.monster_loot = []
+
 
 
 class Balam(Monster):
@@ -144,7 +177,15 @@ class Balam(Monster):
     self.monster_phrase = " *HMMM* Even death fears me..."
 
     self.hp = 20
-    self.max_hp = 20
+    self.max_hp = 20    
+    
+    self.min_damage = 5
+    self.max_damage = 10
+
+    self.xp_value = 10
+    self.monster_loot = []
+
+
 
 
 

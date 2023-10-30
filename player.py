@@ -1,33 +1,39 @@
 import random
+from item import Item, Sword, DeathSword, Shield, Bow, Axe, FireAxe, Chainmail, SteelChestplate
 
-from item import Armor, Weapon
-
+# global Kevin
+# Kevin = Item("Kevin", "Kevin is a nice guy.", "Kevin")
 
 class Player:
   level = 10
   xp = 0
   next_level_xp = 500
-  hp = 1
+  hp = 100
   max_hp = 50
   name = ""
-  inventory = []
+  inventory = [Sword(1, " ")]
+  armor = 0
 
+  
   def __init__(self, name):
     self.name = name
 
-    self.weapon = Weapon(1, "")
-    self.armor = Armor(1, "")
-
   def attack(self):
-    damage = self.level + random.randint(self.weapon.min_damage,
-                                         self.weapon.max_damage)
-    print(self.name, "attacks with a ", self.weapon.weapon_type, "for", damage,
-          "damage")
-    return damage
+    weapon_choice = " "
+    while weapon_choice not in self.inventory: 
+      weapon_choice = input(" > Which weapon do you want to use? ")
+      weapon_choice = weapon_choice.lower()
+      for item in self.inventory:
+        if item.item_type == weapon_choice:
+          damage = random.randint(item.min_damage, item.max_damage)
+          return damage
+        else:
+          print("  > You don't have that weapon")
+    
 
   def take_hit(self, damage):
 
-    final_damage = damage - self.armor.defence
+    final_damage = damage - self.armor
 
     if final_damage > 0:
 
@@ -67,22 +73,37 @@ class Player:
       print("YAY! You reached level", self.level, "!")
       self.print_Stats()
 
-  def equip_item(self, item):
-    if item.item_type == "weapon":
-      self.weapon = item
-    elif item.item_type == "armor":
-      self.armor = item
+  # def equip_item(self, item):
+  #   if item.item_type == "weapon":
+  #     self.weapon = item
+  #   elif item.item_type == "armor":
+  #     self.armor = item
+
+  
+  def spaties(self, woord):
+    global spatielijst
+    lengte = 46 - len(woord)
+    for i in lengte:
+      spatielijst = []
+    
 
   def print_Stats(self):
     print()
-    print("##########################")
-    print("####   Player Stats:   ###")
-    print("##########################")
-    print("Name: ", self.name)
-    print("Level: ", self.level)
-    print("HP: ", self.hp, "/", self.max_hp)
-    print("XP: ", self.xp, "/", self.next_level_xp)
-    print("--------------------------")
-    self.weapon.print_stats()
-    self.armor.print_stats()
-    print("##########################")
+    print("################################################")
+    print("#                 Player Stats:                #")
+    print("################################################")
+    print("#                                              #")
+    print("# Name: ", self.name)
+    print("# Level: ", self.level)
+    print("# HP: ", self.hp, "/", self.max_hp)
+    print("# XP: ", self.xp, "/", self.next_level_xp)
+    print("#                                              #")
+    print("################################################")
+    print("#                 Inventory:  (global)         #")
+    print("################################################")
+    print("#                                              #")
+    for items in self.inventory:
+      print("# - " + str(items.item_name) +  " " +  "\""+  items.item_lore +  "\"")
+    print("#                                              #")
+    print("################################################")
+    print()

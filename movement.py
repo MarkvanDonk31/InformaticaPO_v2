@@ -1,4 +1,5 @@
 import os
+from item import Item, Axe, Sword, DeathSword, Axe, FireAxe, Bow, Shield, Chainmail, SteelChestplate
 from monster import Fenrir, Monster, Skeleton, Goblin, Troll, Balam, Sorcerer, Ghost
 from player import Player
 
@@ -7,6 +8,7 @@ clear = lambda: os.system('clear')
 
 class Movement:
   monster_list = []
+  item_list = []
   
   location = "Galander Castle"
   galander = {
@@ -14,14 +16,14 @@ class Movement:
           "transitions": {
               "north": "The Road"
           },
-          "items": [],
+          "items": [Axe(1, "")],
           "enemies": [Skeleton(1)],
           "objects": []
       },
       "The Road": {
           "transitions": {
               "east": "The Dark Cave",
-              "south": "Galender Castle",
+              "south": "Galander Castle",
               "west": "Village of 'Luminairy'"
           },
           "items": [],
@@ -229,35 +231,9 @@ class Movement:
     elif Movement.location == "The Dark Cave":
       print("You are at The Dark Cave.. ")
 
-
-
-    # for pawn in Movement.galander[Movement.location]["enemies"]:
-    #   if pawn == "Skeleton":
-    #     Movement.monster_list.append(Skeleton(1))
-
-    #   if pawn == "Troll":
-    #     Movement.monster_list.append(Troll(1))
-
-    #   if pawn == "Sorcerer":
-    #     Movement.monster_list.append(Sorcerer)
-
-    #   if pawn == "Ghost":
-    #     Movement.monster_list.append(Ghost)
-
-    #   if pawn == "Goblin":
-    #     Movement.monster_list.append(Goblin)
-
-    #   if pawn == "Fenir":
-    #     Movement.monster_list.append(Fenrir)
-
-    #   if pawn == "Balam":
-    #     Movement.monster_list.append(Balam)
-
-    #   if pawn == "Sorcerer":
-    #     Movement.monster_list.append(Sorcerer)
-
-
     Movement.monster_list = Movement.galander[Movement.location]["enemies"]
+      
+    Movement.item_list = Movement.galander[Movement.location]["items"]
 
     print("Possible directions:")
     for path_options in Movement.galander[Movement.location]["transitions"]:
@@ -267,7 +243,9 @@ class Movement:
     if len(Movement.galander[Movement.location]["items"]) > 0:
       print("Possible items:")
       for item in Movement.galander[Movement.location]["items"]:
-        print(" > " + item)
+        print(" > " + item.item_type +  " " + item.item_lore)
+        if len(item.item_enchantments) > 0:
+          print("  > Enchantments : " + str(item.item_enchantments))
       print()
 
     if len(Movement.galander[Movement.location]["enemies"]) > 0:

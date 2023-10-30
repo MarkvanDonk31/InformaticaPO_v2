@@ -1,6 +1,5 @@
 import os
 from player import Player
-from battle import Battle
 
 clear = lambda: os.system('clear')
 
@@ -48,7 +47,14 @@ class Visual:
     print()
 
   def commandScreen():
-    pass
+    print()
+    print("################################################")
+    print("#                COMMANDS LIST                 #")
+    print("################################################")
+    print("# walk [direction] - Walk in the direction!    #")
+    print("# use [item] - Use this item, if you have it!  #")
+    print("################################################")
+    print()
 
   def defeatScreen():
     clear()

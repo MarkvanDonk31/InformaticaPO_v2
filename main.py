@@ -1,8 +1,9 @@
 import random
 import os
+from fighting import Fighting
 
-from battle import Battle
-from item import Armor, Item, Weapon
+#from battle import Battle
+from item import Item, Sword, DeathSword, Shield, Bow, Axe, FireAxe, Chainmail, SteelChestplate
 from monster import Monster, Skeleton, Troll
 from player import Player
 from visual import Visual
@@ -37,24 +38,32 @@ clear()
 
 ## While the game_Status == running the game is during.
 while game_Status == "running":
-  # print("----")
-  # print()
-
-  # battle = Battle(player)
-  # battle.fight_battle()
 
   Movement.showLocation()
   playeraction = input("  > ")
   playeraction = playeraction.lower().split(" ", 1)
-
+  
   if playeraction[0] == "walk":
     Movement.walk(playeraction[1])
 
   if playeraction[0] == "attack":
+    Fighting.player_attack(player)
+    Fighting.monster_attack(player)                                   
+
     pass
   if playeraction[0] == "use":
     pass
 
+  if playeraction[0] == "help":
+    Visual.commandScreen()
+
+  if playeraction[0] == "stats":
+    Player.print_Stats(player)
+
+  if playeraction[0] == "":
+    pass
+  else:
+    print(" > Is that an valid commands? Try 'help'")
 
 #############################################################################
 
