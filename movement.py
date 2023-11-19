@@ -1,24 +1,28 @@
 import os
-from item import Item, Axe, Sword, DeathSword, Axe, FireAxe, Bow, Shield, Chainmail, SteelChestplate
+from chest import Chest, normalChest, goldChest, mythicalChest
+from item import ArmorPotion, Item, Axe, Sword, DeathSword, Axe, FireAxe, Bow, Shield, Chainmail, SteelChestplate, Apple, GoldenKey, NormalKey, MythicalKey
 from monster import Fenrir, Monster, Skeleton, Goblin, Troll, Balam, Sorcerer, Ghost
-from player import Player
+
+##########################################################################
 
 clear = lambda: os.system('clear')
 
+##########################################################################
 
 class Movement:
   monster_list = []
   item_list = []
-  
+
+  # Worldmap / locations
   location = "Galander Castle"
   galander = {
       "Galander Castle": {
           "transitions": {
               "north": "The Road"
           },
-          "items": [Axe(1, "")],
-          "enemies": [Skeleton(1)],
-          "objects": []
+          "items": [Apple(1, ""), NormalKey(1, "")],
+          "enemies": [],
+          "objects": [normalChest(Axe(1, "sharpness"))]
       },
       "The Road": {
           "transitions": {
@@ -37,9 +41,17 @@ class Movement:
               "south": "The Bakery",
               "west": "The Blacksmith"
           },
-          "items": [],
+          "items": [MythicalKey(1, "")],
           "enemies": [],
           "objects": []
+      },
+      "The Blacksmith": {
+          "transitions": {
+              "east": "Village of 'Luminairy'"
+          },
+          "items": [ArmorPotion(1, "")],
+          "enemies": [Ghost(1)],
+          "objects": [normalChest(Axe(1, "sharpness"))]
       },
       "The River": {
           "transitions": {
@@ -47,7 +59,7 @@ class Movement:
               "south": "Village of 'Luminairy'",
               "west": "The Forest"
           },
-          "items": [],
+          "items": [Apple(1, "")],
           "enemies": [Skeleton(1)],
           "objects": []
       },
@@ -55,7 +67,7 @@ class Movement:
           "transitions": {
               "east": "The River"
           },
-          "items": [],
+          "items": [Shield(1, "")],
           "enemies": [],
           "objects": []
       },
@@ -65,7 +77,7 @@ class Movement:
               "east": "The Trolls Hideout",
               "south": "The River",
           },
-          "items": [],
+          "items": [Apple(1, "")],
           "enemies": [],
           "objects": []
       },
@@ -92,7 +104,7 @@ class Movement:
               "north": "Old Woods",
               "east": "The Goblin Village"
           },
-          "items": [],
+          "items": [Shield(1, "")],
           "enemies": [],
           "objects": []
       },
@@ -111,14 +123,14 @@ class Movement:
           },
           "items": [],
           "enemies": [Ghost(2)],
-          "objects": []
+          "objects": [mythicalChest(DeathSword(1, ""))]
       },
       "Old Woods": {
           "transitions": {
               "north": "The Grasslands",
               "south": "The Dark Cave"
           },
-          "items": [],
+          "items": [ArmorPotion(1, "")],
           "enemies": [Skeleton(1)],
           "objects": []
       },
@@ -128,7 +140,7 @@ class Movement:
               "south": "Old Woods",
               "west": "The Trolls Hideout"
           },
-          "items": [],
+          "items": [Apple(1, "")],
           "enemies": [],
           "objects": []
       },
@@ -137,7 +149,7 @@ class Movement:
               "east": "The Grasslands",
               "west": "The Farmlands"
           },
-          "items": [],
+          "items": [GoldenKey(1, "")],
           "enemies": [Troll(1), Troll(1), Troll(2)],
           "objects": []
       },
@@ -147,7 +159,7 @@ class Movement:
               "east": "The Sorceres Cave",
               "south": "The Misty Swamps"
           },
-          "items": [],
+          "items": [Apple(1, "")],
           "enemies": [Ghost(1), Ghost(3)],
           "objects": []
       },
@@ -157,18 +169,30 @@ class Movement:
           },
           "items": [],
           "enemies": [Sorcerer(1), Sorcerer(1)],
-          "objects": []
+          "objects": [goldChest(SteelChestplate(1, ""))]
       },
       "Balam's Dungeon": {
           "transitions": {
               "south": "The Misty Swamps",
           },
           "items": [],
-          "enemies": [Balam(1)],
+          "enemies": [Balam(1), Skeleton(1)],
           "objects": []
       },
+      "Fenrir's Dungeon": {
+          "transitions": {
+              "east": "The Bloody Ruins",
+          },
+          "items": [],
+          "enemies": [Fenrir(1), Troll(1)],
+          "objects": []
+      },
+    
   }
+  
+##########################################################################
 
+  # For each location print a message
   def showLocation():
 
     if Movement.location == "Galander Castle":
@@ -231,37 +255,40 @@ class Movement:
     elif Movement.location == "The Dark Cave":
       print("You are at The Dark Cave.. ")
 
+##########################################################################
+
     Movement.monster_list = Movement.galander[Movement.location]["enemies"]
-      
     Movement.item_list = Movement.galander[Movement.location]["items"]
 
-    print("Possible directions:")
+    # Print the directions, objects items and enemies
+    print("Directions:")
     for path_options in Movement.galander[Movement.location]["transitions"]:
       print(" > " + path_options)
     print()
 
     if len(Movement.galander[Movement.location]["items"]) > 0:
-      print("Possible items:")
+      print("Items:")
       for item in Movement.galander[Movement.location]["items"]:
-        print(" > " + item.item_type +  " " + item.item_lore)
+        print(" > " + item.item_name +  " | " + item.item_lore)
         if len(item.item_enchantments) > 0:
           print("  > Enchantments : " + str(item.item_enchantments))
       print()
 
     if len(Movement.galander[Movement.location]["enemies"]) > 0:
-      print("Possible enemies:")
+      print("Enemies:")
       for enemy in Movement.monster_list:
-        print(" > " + enemy.monster_type  + " HP: " + str(enemy.hp) + "/" +  str(enemy.max_hp) + " " + str(enemy.monster_phrase))        
+        print(" > " + enemy.monster_type  + "  HP: " + str(enemy.hp) + "/" +  str(enemy.max_hp) + " " + str(enemy.monster_phrase))        
       print()
 
-
-        
     if len(Movement.galander[Movement.location]["objects"]) > 0:
       print("Possible objects:")
       for object in Movement.galander[Movement.location]["objects"]:
-        print(" > " + object)
+        print(" > " + str(object.object_name))
       print()
 
+##########################################################################
+
+  # Makes the player able to move to another location
   def walk(direction=str):
     if direction in Movement.galander[Movement.location]["transitions"]:
       Movement.location = Movement.galander[
@@ -269,3 +296,7 @@ class Movement:
       clear()
     else:
       print("You can't go that way.")
+
+
+##########################################################################
+

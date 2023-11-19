@@ -1,8 +1,8 @@
-import random
 import os
 from fighting import Fighting
 
 #from battle import Battle
+from chest import Chest
 from item import Item, Sword, DeathSword, Shield, Bow, Axe, FireAxe, Chainmail, SteelChestplate
 from monster import Monster, Skeleton, Troll
 from player import Player
@@ -11,8 +11,6 @@ from movement import Movement
 
 ############################################################################
 
-fenrir_Defeat = False
-balam_Defeat = False
 game_Status = "running"
 battle_count = 0
 
@@ -22,9 +20,13 @@ clear = lambda: os.system('clear')
 
 #############################################################################
 
+# Opening screen
 Visual.openingScreen()
 
+# Lore screen
 Visual.loreScreen()
+
+#P Player name
 player_name = input("Your name: ")
 player = Player(player_name)
 
@@ -39,31 +41,45 @@ clear()
 ## While the game_Status == running the game is during.
 while game_Status == "running":
 
+  # Show the current location and ask the player what he wants to d
   Movement.showLocation()
   playeraction = input("  > ")
   playeraction = playeraction.lower().split(" ", 1)
-  
+
+  # Makes the player walk
   if playeraction[0] == "walk":
+    clear()
     Movement.walk(playeraction[1])
 
-  if playeraction[0] == "attack":
+  # Makes the player attack an enemie
+  elif playeraction[0] == "attack":
     Fighting.player_attack(player)
-    Fighting.monster_attack(player)                                   
+    Fighting.monster_attack(player)  
 
-    pass
-  if playeraction[0] == "use":
-    pass
+  # Make the player use an item
+  elif playeraction[0] == "use":
+    Player.use(player)
 
-  if playeraction[0] == "help":
+  # Shows the player a help window
+  elif playeraction[0] == "help":
     Visual.commandScreen()
 
-  if playeraction[0] == "stats":
+  # Shows the player his stays
+  elif playeraction[0] == "stats":
     Player.print_Stats(player)
 
-  if playeraction[0] == "":
-    pass
+  # Makes the player pick up an item
+  elif playeraction[0] == "pickup":
+    Player.pickUp(player)
+
+  # Opens a chest with a key
+  elif playeraction[0] == "open":
+    Player.openChest(player) 
+
+  # If the command doesn't exist
   else:
-    print(" > Is that an valid commands? Try 'help'")
+    print(" > That command does not exist..")
+
 
 #############################################################################
 
@@ -72,7 +88,10 @@ while game_Status == "running":
     game_Status = "player_death"
 
   # Check if the player won the game by killing Balam and Fenrir.
-  elif fenrir_Defeat == True and balam_Defeat == True:
+  # elif fenrir_Defeat == True and balam_Defeat == True:
+  #   game_Status = "player_win"
+
+  if Fighting.fenrir_Defeat == True and Fighting.balam_Defeat == True:
     game_Status = "player_win"
 
 ## Show visual  of deathScreen
@@ -80,7 +99,7 @@ if game_Status == "player_death":
   Visual.defeatScreen()
 
 ## Show visual of winScreen
-if game_Status == "player_win":
+elif game_Status == "player_win":
   Visual.winScreen()
 
 #############################################################################
